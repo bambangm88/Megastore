@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/scrollHome"
+    tools:context=".Fragment.HomeFragment">
+
+
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+                <com.google.android.material.appbar.AppBarLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/Base.ThemeOverlay.AppCompat.Dark">
+
+                    <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolbarSync"
+                        android:layout_width="match_parent"
+                        android:layout_height="?android:attr/actionBarSize"
+                        android:layout_gravity="center"
+                        android:background="@color/colorPrimary"
+                        android:theme="@style/mytoolbar"
+                        app:elevation="4dp"
+                        app:popupTheme="@style/Base.Theme.AppCompat.Light.DarkActionBar">
+
+                        <TextView
+                            android:id="@+id/toolbar_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Lain-lain"
+                            android:textColor="@color/white"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+
+                    </androidx.appcompat.widget.Toolbar>
+
+
+
+                </com.google.android.material.appbar.AppBarLayout>
+
+
+
+            <LinearLayout
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/round_edittext_background">
+
+
+
+                <com.rsah.watermeter.customfonts.AutoCompleteTextViewSFProDisplayRegular
+                    android:id="@+id/tvlainlain"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_toRightOf="@+id/countrycode"
+                    android:background="@color/transparent"
+                    android:hint="lain-lain"
+
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray"
+                    android:textSize="15dp" />
+
+            </LinearLayout>
+
+
+            <com.rsah.watermeter.customfonts.Button_SF_Pro_Display_Medium
+                android:id="@+id/btnLain_lain"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="50dp"
+                android:background="@color/colorPrimary"
+                android:text="apply"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+
+
+
+</RelativeLayout>

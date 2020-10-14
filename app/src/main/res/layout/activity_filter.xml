@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/scrollHome"
+    tools:context=".Fragment.HomeFragment">
+
+
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+                <com.google.android.material.appbar.AppBarLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/Base.ThemeOverlay.AppCompat.Dark">
+
+                    <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolbarSync"
+                        android:layout_width="match_parent"
+                        android:layout_height="?android:attr/actionBarSize"
+                        android:layout_gravity="center"
+                        android:background="@color/colorPrimary"
+                        android:theme="@style/mytoolbar"
+                        app:elevation="4dp"
+                        app:popupTheme="@style/Base.Theme.AppCompat.Light.DarkActionBar">
+
+                        <TextView
+                            android:id="@+id/toolbar_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Filter"
+                            android:textColor="@color/white"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+
+                    </androidx.appcompat.widget.Toolbar>
+
+
+
+                </com.google.android.material.appbar.AppBarLayout>
+
+
+
+            <LinearLayout
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/round_edittext_background">
+
+                <com.rsah.watermeter.customfonts.TextViewSFProDisplayMedium
+                    android:id="@+id/balance"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="customer-name"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="13dp"
+                    tools:ignore="MissingClass" />
+
+                <View
+                    android:layout_width="0.1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_toRightOf="@+id/countrycode"
+                    android:background="@color/dark_gray" />
+
+                <com.rsah.watermeter.customfonts.AutoCompleteTextViewSFProDisplayRegular
+                    android:id="@+id/tvcstname"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_toRightOf="@+id/countrycode"
+                    android:background="@color/transparent"
+                    android:hint="customer name"
+
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray"
+                    android:textSize="15dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/round_edittext_background">
+
+                <com.rsah.watermeter.customfonts.TextViewSFProDisplayMedium
+                    android:id="@+id/amount"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="unit code"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="13dp"
+                    tools:ignore="MissingClass" />
+
+                <View
+                    android:layout_width="0.1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_toRightOf="@+id/countrycode"
+                    android:background="@color/dark_gray" />
+
+                <com.rsah.watermeter.customfonts.AutoCompleteTextViewSFProDisplayRegular
+                    android:id="@+id/tvreference"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_toRightOf="@+id/countrycode"
+                    android:background="@color/transparent"
+                    android:hint="unit code"
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray"
+                    android:textSize="15dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/round_edittext_background">
+
+                <com.rsah.watermeter.customfonts.TextViewSFProDisplayMedium
+                    android:id="@+id/confirm"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="address"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="13dp"
+                    tools:ignore="MissingClass" />
+
+                <View
+                    android:layout_width="0.1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_toRightOf="@+id/countrycode"
+                    android:background="@color/dark_gray" />
+
+                <com.rsah.watermeter.customfonts.AutoCompleteTextViewSFProDisplayRegular
+                    android:id="@+id/tvaddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_toRightOf="@+id/countrycode"
+                    android:background="@color/transparent"
+                    android:hint="address"
+
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray"
+                    android:textSize="15dp" />
+
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/round_edittext_background">
+
+                <com.rsah.watermeter.customfonts.TextViewSFProDisplayMedium
+                    android:id="@+id/confirmd"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="cluster"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="13dp"
+                    tools:ignore="MissingClass" />
+
+                <View
+                    android:layout_width="0.1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_toRightOf="@+id/countrycode"
+                    android:background="@color/dark_gray" />
+
+                <com.rsah.watermeter.customfonts.AutoCompleteTextViewSFProDisplayRegular
+                    android:id="@+id/tvcluster"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_toRightOf="@+id/countrycode"
+                    android:background="@color/transparent"
+                    android:hint="cluster"
+
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray"
+                    android:textSize="15dp" />
+
+
+
+
+            </LinearLayout>
+
+            <Spinner
+                android:id="@+id/spStatus"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/spinner"
+                android:spinnerMode="dialog"/>
+
+
+            <com.rsah.watermeter.customfonts.Button_SF_Pro_Display_Medium
+                android:id="@+id/btnFilter"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/colorPrimary"
+                android:text="filter"
+                android:textAllCaps="false"
+                android:layout_marginBottom="50dp"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+
+
+
+</RelativeLayout>

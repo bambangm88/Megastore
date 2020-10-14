@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#4CBFF0</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="outline_button">#2ABA67</color>
+    <color name="button">#97FFC2</color>
+
+    <color name="list">#ffd550</color>
+
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="unselect">#181818</color>
+    <color name="grey">#4C4A4A</color>
+    <color name="abu_muda">#DADADA</color>
+
+    <!--    biru-->
+    <color name="biru_line">#59d3fc</color>
+    <color name="biru_fill">#74E5FFFF</color>
+
+    <color name="test">#FF0000</color>
+    <color name="background">#dddddd</color>
+
+    <color name="backgroundgray">#f2f2f2</color>
+
+
+    <color name="orange">#ff120b</color>
+    <color name="red">#FF000E</color>
+    <color name="yellow">#ffbb00</color>
+    <color name="transparentblack">#b9000000</color>
+
+    <color name="parentcolor">#0064D3</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="graybackground">#e9e9e9</color>
+    <color name="darkgray">#AAAAAA</color>
+    <color name="light_gray">#FAF9F9</color>
+    <color name="dark_gray">#c4c4c4</color>
+    <color name="dimgray">#696969</color>
+    <color name="lightblack">#5d5d5d</color>
+    <color name="green">#04b110</color>
+    <color name="light_white">#fffefe</color>
+    <color name="off_white">#f8f6f8</color>
+    <color name="light_blue">#00c5ec</color>
+    <color name="silver_gray">#617085</color>
+    <color name="gray">#b6b6b6</color>
+    <color name="light_ferozi">#dbf6fd</color>
+    <color name="delete_message_text">#b8b8b8</color>
+    <color name="fiftypercenttranparent">#B96DC0FF</color>
+    <color name="alphabet_text_selected_color">#3F51B5</color>
+    <color name="splashbackground">#E2F2FE</color>
+    <color name="divider">#e2e2e2</color>
+    <color name="higlight">#20c997</color>
+    <color name="info">#e1ecf4</color>
+
+</resources>

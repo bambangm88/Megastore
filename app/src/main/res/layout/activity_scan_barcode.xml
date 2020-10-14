@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg"
+    tools:context=".Activity.ScanBarcode">
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Base.ThemeOverlay.AppCompat.Dark">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarSync"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:layout_gravity="center"
+            android:background="@color/colorPrimary"
+            android:theme="@style/mytoolbar"
+            app:elevation="4dp"
+            app:popupTheme="@style/Base.Theme.AppCompat.Light.DarkActionBar">
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Camera Scan"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <TextView
+        android:text="SCAN QR CODE"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/relative_scan"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        />
+
+
+
+    <Switch
+        android:layout_marginTop="50dp"
+        android:layout_below="@id/relative_scan"
+        android:layout_centerInParent="true"
+        android:id="@+id/toggleFlashLight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:text="Light " />
+
+    <RelativeLayout
+        android:id="@+id/relative_scan"
+        android:layout_width="300dip"
+        android:layout_height="300dip"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center">
+
+    </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/rlprogress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparentblack"
+        android:clickable="true"
+        android:visibility="gone">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileimage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:src="@color/white" />
+
+        <TextView
+            android:id="@+id/textprogress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/profileimage"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="please wait"
+            android:textColor="@color/white" />
+
+
+        <ProgressBar
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_centerInParent="true" />
+
+        <LinearLayout
+            android:id="@+id/lllogo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:elevation="10dp"
+                android:src="@drawable/logo" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

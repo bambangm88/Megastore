@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg"
+    tools:context=".Activity.Syncronize">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/Base.ThemeOverlay.AppCompat.Dark">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbarSync"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                android:layout_gravity="center"
+                android:background="@color/colorPrimary"
+                android:theme="@style/mytoolbar"
+                app:elevation="4dp"
+                app:popupTheme="@style/Base.Theme.AppCompat.Light.DarkActionBar">
+
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Syncronize"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+            </androidx.appcompat.widget.Toolbar>
+
+
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        </LinearLayout>
+
+
+
+
+
+
+
+
+    </ScrollView>
+
+
+<RelativeLayout
+    android:id="@+id/card_button_sync"
+    android:layout_marginTop="100dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_centerHorizontal="true"
+        android:id="@+id/ivsynch"
+
+        android:src="@drawable/synchronization"
+        android:layout_width="100dp"
+        android:layout_height="100dp"/>
+
+    <TextView
+        android:id="@+id/txt"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/colorPrimary"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:text="Tekan Tombol Untuk Syncronize Data"
+        android:layout_below="@+id/ivsynch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>
+
+
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/card_button_sync"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:weightSum="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:paddingLeft="10dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:text="Open Sync"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp"
+                android:paddingLeft="10dp"
+                android:textColor="@color/white"
+                android:text="0"
+                android:id="@+id/tvcopen"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/colorPrimary"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:weightSum="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp"
+                android:paddingLeft="10dp"
+                android:textColor="@color/white"
+                android:text="Waiting Sync"
+                android:layout_marginRight="2dp"
+                android:layout_marginLeft="20dp"
+                android:background="@color/colorPrimary"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp"
+                android:paddingLeft="10dp"
+                android:textColor="@color/white"
+                android:text="0"
+                android:id="@+id/tvwaiting"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/colorPrimary"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:weightSum="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp"
+                android:paddingLeft="10dp"
+                android:textColor="@color/white"
+                android:text="Complete Sync"
+                android:layout_marginRight="2dp"
+                android:layout_marginLeft="20dp"
+                android:background="@color/colorPrimary"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp"
+                android:paddingLeft="10dp"
+                android:textColor="@color/white"
+                android:text="0"
+                android:id="@+id/tvcomplete"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/colorPrimary"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:weightSum="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp"
+                android:paddingLeft="10dp"
+                android:textColor="@color/white"
+                android:text="Pending Sync"
+                android:layout_marginRight="2dp"
+                android:layout_marginLeft="20dp"
+                android:background="@color/colorPrimary"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp"
+                android:paddingLeft="10dp"
+                android:textColor="@color/white"
+                android:text="0"
+                android:id="@+id/tvpending"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/colorPrimary"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:weightSum="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp"
+                android:paddingLeft="10dp"
+                android:textColor="@color/white"
+                android:text="Total Sync"
+                android:layout_marginRight="2dp"
+                android:layout_marginLeft="20dp"
+                android:background="@color/colorPrimary"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp"
+                android:paddingLeft="10dp"
+                android:textColor="@color/white"
+                android:text="0"
+                android:id="@+id/tvtotal"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/colorPrimary"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_marginTop="15dp"
+            android:weightSum="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp"
+                android:paddingLeft="10dp"
+                android:textColor="@color/white"
+                android:text="Period"
+                android:layout_marginRight="2dp"
+                android:layout_marginLeft="20dp"
+                android:background="@color/colorPrimary"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp"
+                android:paddingLeft="10dp"
+                android:textColor="@color/white"
+                android:text=""
+                android:id="@+id/tvperiod"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/colorPrimary"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/cardnewperiod"
+            android:layout_marginTop="3dp"
+            android:weightSum="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp"
+                android:paddingLeft="10dp"
+                android:textColor="@color/white"
+                android:text="New Period"
+                android:layout_marginRight="2dp"
+                android:layout_marginLeft="20dp"
+                android:background="@color/colorPrimary"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp"
+                android:paddingLeft="10dp"
+                android:textColor="@color/white"
+                android:text=""
+                android:id="@+id/tvnewperiod"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/colorPrimary"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="3dp"
+            android:weightSum="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp"
+                android:paddingLeft="10dp"
+                android:textColor="@color/white"
+                android:text="Last Sync"
+                android:layout_marginRight="2dp"
+                android:layout_marginLeft="20dp"
+                android:background="@color/colorPrimary"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp"
+                android:paddingLeft="10dp"
+                android:textColor="@color/white"
+                android:text=""
+                android:id="@+id/tvlastsync"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/colorPrimary"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Switch
+                android:visibility="gone"
+                android:id="@+id/withdownload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:text="with download" />
+
+        </RelativeLayout>
+
+
+
+        <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Switch
+            android:visibility="gone"
+            android:id="@+id/swnewperiod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:text="download new period" />
+
+    </RelativeLayout>
+
+
+
+
+
+    </LinearLayout>
+
+
+
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/rlprogress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparentblack"
+        android:clickable="true"
+        android:visibility="gone">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileimage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:src="@color/white" />
+
+        <TextView
+            android:id="@+id/textprogress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/profileimage"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="please wait"
+            android:textColor="@color/white" />
+
+
+        <ProgressBar
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_centerInParent="true" />
+
+        <LinearLayout
+            android:id="@+id/lllogo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:elevation="10dp"
+                android:src="@drawable/logo" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+
+
+
+
+
+</RelativeLayout>

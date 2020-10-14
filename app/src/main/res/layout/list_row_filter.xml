@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <TextView
+        android:text="cstname"
+        android:id="@+id/tvcstname"
+        android:layout_marginBottom="5dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+        <TextView
+            android:visibility="gone"
+            android:textAlignment="textStart"
+            android:layout_marginTop="3dp"
+            android:textStyle="bold"
+            android:text="cons 1000"
+            android:textSize="10dp"
+            android:id="@+id/tvconsum"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="10dp"
+            android:paddingLeft="10dp"
+            android:layout_alignParentEnd="true"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content" />
+
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="reference"
+            android:textSize="14dp"
+            android:id="@+id/tvref"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:visibility="gone"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="80dp"
+            android:layout_alignParentRight="true"
+            android:text="√"
+            android:textSize="14dp"
+            android:id="@+id/tvcheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_marginTop="3dp"
+            android:textStyle="bold"
+            android:text="status"
+            android:textSize="8dp"
+            android:id="@+id/tvstatus"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="10dp"
+            android:paddingLeft="10dp"
+            android:textColor="@color/white"
+            android:background="@color/colorPrimary"
+            android:layout_alignParentEnd="true"
+            android:textAlignment="center"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content" />
+
+
+
+    </RelativeLayout>
+
+
+
+    <TextView
+        android:text="address"
+        android:id="@+id/tvaddress"
+        android:textSize="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <TextView
+        android:textStyle="bold"
+        android:text="cluster"
+        android:id="@+id/tvcluster"
+        android:textSize="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+
+
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <TextView
+        android:layout_marginTop="3dp"
+        android:textStyle="bold"
+        android:text="prev scan 1000"
+        android:textSize="10dp"
+        android:id="@+id/tvprevscan"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="10dp"
+        android:paddingLeft="10dp"
+        android:layout_alignParentEnd="true"
+        android:textAlignment="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+</LinearLayout>
