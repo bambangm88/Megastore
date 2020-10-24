@@ -83,6 +83,29 @@ public class ResponseCustomer {
     @SerializedName("period")
     private String period;
 
+    @SerializedName("font_size")
+    private String font_size;
+
+    @SerializedName("font_style")
+    private String font_style;
+
+    public String getFont_size() {
+        return font_size;
+    }
+
+    public void setFont_size(String font_size) {
+        this.font_size = font_size;
+    }
+
+    public String getFont_style() {
+        return font_style;
+    }
+
+    public void setFont_style(String font_style) {
+        this.font_style = font_style;
+    }
+
+
 
     @SerializedName("prev_initial_meter")
     private String prev_initial_meter;

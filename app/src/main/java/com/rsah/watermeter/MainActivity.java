@@ -3,6 +3,7 @@ package com.rsah.watermeter;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.Menu;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.rsah.watermeter.Fragment.TasklistFragment;
 import com.rsah.watermeter.Fragment.MainScanFragment;
 import com.rsah.watermeter.Model.response.ResponseLogin;
 import com.rsah.watermeter.Session.SessionManager;
+import com.rsah.watermeter.Util.AESUtil;
 import com.rsah.watermeter.Util.Helper;
 
 import androidx.annotation.NonNull;
@@ -78,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         TextView txtname = headerView.findViewById(R.id.txttitle);
         txtname.setText(name);
         txttitle.setText(id);
+
 
 
 

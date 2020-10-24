@@ -96,7 +96,7 @@ public class Syncronize extends AppCompatActivity {
     private AsyncTaskProgressDescDownloading asyncdescdownloading;
     private Switch swnewperiod , swwithdownload;
     private static Boolean newperiod = false;
-    private static Boolean withdownload = false;
+    private Boolean withdownload = false;
     private static String TAG_PERIOD_ID = "";
     private static String TAG_PERIOD_ID_LOCAL = "";
     private static String TAG_PERIOD_ID_REQUEST = "";
@@ -113,7 +113,7 @@ public class Syncronize extends AppCompatActivity {
         API = Server.getAPIService();
         rlprogress = findViewById(R.id.rlprogress);
         tvprogresscount = findViewById(R.id.textprogress);
-
+        sesion = new SessionManager(this);
         tvopen = findViewById(R.id.tvcopen);
         tvwaiting = findViewById(R.id.tvwaiting);
         tvcomplete = findViewById(R.id.tvcomplete);
@@ -129,7 +129,8 @@ public class Syncronize extends AppCompatActivity {
         asyncprogress = new AsyncTaskProgress();
         asyncdownloading = new AsyncTaskProgressDownloading();
         asyncdescdownloading = new AsyncTaskProgressDescDownloading();
-
+        newperiod = false;
+        withdownload = false;
 
         Toolbar toolbar = findViewById(R.id.toolbarSync);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -162,6 +163,11 @@ public class Syncronize extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 newperiod = isChecked ;
+                if (isChecked) {
+                    swwithdownload.setVisibility(View.GONE);
+                }else{
+                    swwithdownload.setVisibility(View.VISIBLE);
+                }
 
             }
         });
@@ -225,18 +231,24 @@ public class Syncronize extends AppCompatActivity {
                     SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy HH:mm:ss", Locale.getDefault());
                     String currentDateandTime = sdf.format(new Date());
 
+                    if (newperiod ){
 
-
-                    if (newperiod || withdownload){
-
+                            Log.e("TAG", "confirm: "+"new periode" );
                             TAG_PERIOD_ID_REQUEST = TAG_PERIOD_ID_LOCAL ;
                             SQLite.updateStatusLastSyncDataDB(TAG_PERIOD_ID_LOCAL,period_desc_dump,currentDateandTime,Constant.TAG_NAME_APP);
-
                             SQLite.updateStatusLastSyncDataDB(TAG_PERIOD_ID,period_desc_dump_new,currentDateandTime,Constant.TAG_NAME_APP);
                             TAG_PERIOD_ID_REQUEST = TAG_PERIOD_ID ;
 
+                    }else if(!withdownload){
+
+                        Log.e("TAG", "confirm: "+"tidak withdownload" );
+                        newperiod = false ;
+                        TAG_SYNC = "start";
+                        TAG_PERIOD_ID_REQUEST = TAG_PERIOD_ID_LOCAL ;
+                        SQLite.updateStatusLastSyncDataDB(TAG_PERIOD_ID_LOCAL,period_desc_dump,currentDateandTime,Constant.TAG_NAME_APP);
 
                     }else{
+                        Log.e("TAG", "confirm: "+"withdownload" );
                         TAG_PERIOD_ID_REQUEST = TAG_PERIOD_ID_LOCAL ;
                         SQLite.updateStatusLastSyncDataDB(TAG_PERIOD_ID_LOCAL,period_desc_dump,currentDateandTime,Constant.TAG_NAME_APP);
                     }
@@ -302,6 +314,10 @@ public class Syncronize extends AppCompatActivity {
                             String periodDesc = responseData.getData().get(0).getDescription() ;
                             String status = responseData.getData().get(0).getStatus() ;
 
+                            String fontsize = responseData.getData().get(0).getFont_size() ;
+                            String fontstyle = responseData.getData().get(0).getFont_style() ;
+                            sesion.saveSetting(fontsize,fontstyle);
+
                             TAG_PERIOD_ID = idPeriod ;
                             period_desc_dump_new = periodDesc ;
 
@@ -347,15 +363,9 @@ public class Syncronize extends AppCompatActivity {
                                     }
                                 }
 
-
-
-
                             }
 
                             tvperiod.setText(period_desc_dump);
-
-
-
 
                         }else {
                             showProgress(false);
@@ -494,8 +504,6 @@ public class Syncronize extends AppCompatActivity {
 
 
 
-
-
     private class AsyncTaskProgress extends AsyncTask<String,Integer,String>{
 
 
@@ -521,16 +529,26 @@ public class Syncronize extends AppCompatActivity {
             String time = ""+System.currentTimeMillis();
             String signature_ = Helper.Hash_SHA256(uid_+secretkey+time);
 
-            //if data in db is empty
-            if (data.size() == 0 ){
+            try {
+                Thread.sleep(4000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
+            if (data.size() == 0) {
 
-                    String period_id = TAG_PERIOD_ID_REQUEST ;
+                if (!withdownload) {
 
-                    if (newperiod){
+                    publishProgress(Constant.STATUS_FINISH_CODE_SYNC); //error code
+                    //showProgress(false);
+                    Log.e("TAG", "doInBackground: "+"kesini yah" );
+                    asyncprogress.cancel(true);
+                }else {
+                    String period_id = TAG_PERIOD_ID_REQUEST;
+
+                    if (newperiod) {
                         SQLite.deleteAllCustomer();
                     }
-
 
                     //add delay for wait database is uptodate
                     try {
@@ -541,7 +559,7 @@ public class Syncronize extends AppCompatActivity {
 
                     //insert into db from server if table is empty
                     TAG_SYNC = "start";
-                    API.requestGetCustomer(new JsonCustomer(uid_, signature_, reference, time,period_id)).enqueue(new Callback<ResponseData>() {
+                    API.requestGetCustomer(new JsonCustomer(uid_, signature_, reference, time, period_id)).enqueue(new Callback<ResponseData>() {
                         @Override
                         public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
 
@@ -552,7 +570,6 @@ public class Syncronize extends AppCompatActivity {
 
                                     ResponseData responseData = response.body();
                                     if (responseData.getStatus().equals(Constant.ERR_0)) {
-
 
                                         CustomerList.add(responseData);
                                         asyncdownloading.execute("");
@@ -585,7 +602,7 @@ public class Syncronize extends AppCompatActivity {
                             Toast.makeText(Syncronize.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
-
+                }
 
             }
 
@@ -653,64 +670,69 @@ public class Syncronize extends AppCompatActivity {
 
                     );
 
+                        if (i == data.size() - 1) {
+
+                            if (!withdownload) {
+                                publishProgress(Constant.STATUS_FINISH_CODE_SYNC); //error code
+                                showProgress(false);
+                                asyncprogress.cancel(true);
+                            }else {
+                                SQLite.deleteAllCustomer();
+                                //add delay for wait database is uptodate
+                                try {
+                                    Thread.sleep(5000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+
+                                Log.e("TAG", "doInBackground: "+"kesini dong" );
+
+                                CustomerList.clear();
+                                //insert into db from server if table is empty
+                                API.requestGetCustomer(new JsonCustomer(uid_, signature_, reference, time, period_id)).enqueue(new Callback<ResponseData>() {
+                                    @Override
+                                    public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
+
+                                        if (response.isSuccessful()) {
 
 
-                    if (i == data.size() - 1 ){
+                                            if (response.body() != null) {
 
-                            SQLite.deleteAllCustomer();
-                            //add delay for wait database is uptodate
-                            try {
-                                Thread.sleep(5000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+                                                ResponseData responseData = response.body();
+                                                if (responseData.getStatus().equals(Constant.ERR_0)) {
 
-                            CustomerList.clear();
-                            //insert into db from server if table is empty
-                            API.requestGetCustomer(new JsonCustomer(uid_,signature_,reference,time,period_id)).enqueue(new Callback<ResponseData>() {
-                                @Override
-                                public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
+                                                    CustomerList.add(responseData);
+                                                    asyncdownloading.execute("");
 
-                                    if (response.isSuccessful()){
+                                                } else {
+                                                    publishProgress(Constant.STATUS_ERROR_CODE_SYNC); //error code
+                                                    asyncprogress.cancel(true);
+                                                    Toast.makeText(Syncronize.this, responseData.getMessage(), Toast.LENGTH_LONG).show();
+                                                }
 
-
-                                        if (response.body() != null){
-
-                                            ResponseData responseData = response.body();
-                                            if(responseData.getStatus().equals(Constant.ERR_0)){
-
-                                                CustomerList.add(responseData);
-                                                asyncdownloading.execute("");
-
-                                            }else {
+                                            } else {
                                                 publishProgress(Constant.STATUS_ERROR_CODE_SYNC); //error code
                                                 asyncprogress.cancel(true);
-                                                Toast.makeText(Syncronize.this, responseData.getMessage(), Toast.LENGTH_LONG).show();
+                                                Toast.makeText(Syncronize.this, Constant.TAG_SERVER_ERROR, Toast.LENGTH_LONG).show();
                                             }
 
-                                        }else{
+                                        } else {
                                             publishProgress(Constant.STATUS_ERROR_CODE_SYNC); //error code
                                             asyncprogress.cancel(true);
-                                            Toast.makeText(Syncronize.this, Constant.TAG_SERVER_ERROR, Toast.LENGTH_LONG).show();
+                                            Toast.makeText(Syncronize.this, Constant.TAG_SERVER_ERROR, Toast.LENGTH_SHORT).show();
                                         }
+                                    }
 
-                                    }else {
+                                    @Override
+                                    public void onFailure(Call<ResponseData> call, Throwable t) {
                                         publishProgress(Constant.STATUS_ERROR_CODE_SYNC); //error code
                                         asyncprogress.cancel(true);
-                                        Toast.makeText(Syncronize.this, Constant.TAG_SERVER_ERROR, Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(Syncronize.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
-                                }
+                                });
+                            }
 
-                                @Override
-                                public void onFailure(Call<ResponseData> call, Throwable t) {
-                                    publishProgress(Constant.STATUS_ERROR_CODE_SYNC); //error code
-                                    asyncprogress.cancel(true);
-                                    Toast.makeText(Syncronize.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
-
-
-                    }
+                        }
 
 
 
@@ -741,7 +763,7 @@ public class Syncronize extends AppCompatActivity {
 
                 new KAlertDialog(Syncronize.this, KAlertDialog.WARNING_TYPE)
                         .setTitleText("Notification")
-                        .setContentText("Syncronized Gagal, Terjadi Kesalahan")
+                        .setContentText("Syncronized Up Gagal, Terjadi Kesalahan")
                         .setConfirmText("OK")
                         .setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
                             @Override
@@ -906,11 +928,6 @@ public class Syncronize extends AppCompatActivity {
                 }
 
 
-
-
-
-
-
             }catch (Exception ex){
                 TAG_SYNC = "stop" ;
                 Log.e("TAG", "Terjadi Kesalahan "+ex.getMessage());
@@ -1009,7 +1026,7 @@ public class Syncronize extends AppCompatActivity {
 
                 new KAlertDialog(Syncronize.this, KAlertDialog.WARNING_TYPE)
                         .setTitleText("Notification")
-                        .setContentText("Syncronized Gagal, Terjadi Kesalahan")
+                        .setContentText("Syncronized Down Gagal, Terjadi Kesalahan")
                         .setConfirmText("OK")
                         .setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
                             @Override
@@ -1144,7 +1161,7 @@ public class Syncronize extends AppCompatActivity {
 
                 new KAlertDialog(Syncronize.this, KAlertDialog.WARNING_TYPE)
                         .setTitleText("Notification")
-                        .setContentText("Syncronized Gagal, Terjadi Kesalahan")
+                        .setContentText("Syncronized Description Gagal, Terjadi Kesalahan")
                         .setConfirmText("OK")
                         .setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
                             @Override

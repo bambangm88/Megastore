@@ -3,11 +3,6 @@ package com.rsah.watermeter.Api;
 
 
 
-
-
-
-
-
 import com.rsah.watermeter.Model.json.Json;
 import com.rsah.watermeter.Model.json.JsonCustomer;
 import com.rsah.watermeter.Model.json.JsonLogin;
@@ -25,8 +20,6 @@ import retrofit2.http.POST;
 
 
 public interface ApiService {
-
-
 
     @Headers("Content-Type: application/json")
     @POST("login")

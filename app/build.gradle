@@ -64,5 +64,6 @@ dependencies {
 
     implementation 'com.huangyz0918:androidwm:0.2.3'
 
+    implementation 'commons-codec:commons-codec:1.10'
 
 }

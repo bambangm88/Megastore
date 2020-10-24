@@ -2,6 +2,8 @@ package com.rsah.watermeter.Activity.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 import com.rsah.watermeter.Constant.Constant;
 import com.rsah.watermeter.Model.response.ResponseCustomer;
 import com.rsah.watermeter.R;
+import com.rsah.watermeter.Session.SessionManager;
 import com.rsah.watermeter.Util.DbCustomerHelper;
 
 import java.util.List;
@@ -130,6 +133,26 @@ public class Adapter extends BaseAdapter {
 
         }
 
+        SessionManager sessionManager = new SessionManager(activity);
+        String fontsize = sessionManager.getFontSize();
+        String fontstyle = sessionManager.getFontStyle();
+
+        if (fontstyle.equals("bold")){
+            cstname.setTypeface(cstname.getTypeface(), Typeface.BOLD);
+            ref.setTypeface(cstname.getTypeface(), Typeface.BOLD);
+            cluster.setTypeface(cstname.getTypeface(), Typeface.BOLD);
+            address.setTypeface(cstname.getTypeface(), Typeface.BOLD);
+        }
+
+        if (fontsize != null ){
+
+            if (!fontsize.equals("") ){
+                cstname.setTextSize(TypedValue.COMPLEX_UNIT_PT,Integer.parseInt(fontsize));
+                ref.setTextSize(TypedValue.COMPLEX_UNIT_PT,Integer.parseInt(fontsize));
+                cluster.setTextSize(TypedValue.COMPLEX_UNIT_PT,Integer.parseInt(fontsize));
+                address.setTextSize(TypedValue.COMPLEX_UNIT_PT,Integer.parseInt(fontsize));
+            }
+        }
 
 
 

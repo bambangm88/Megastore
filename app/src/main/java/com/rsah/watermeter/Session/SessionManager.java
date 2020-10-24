@@ -24,6 +24,9 @@ public class SessionManager {
     public static final String KEY_USER = "userx_";
     public static final String KEY_AMOUNT = "amountx_";
 
+    public static final String KEY_FONT_SIZE= "fontsizex_";
+    public static final String KEY_FONT_STYLE = "fontstylex_";
+
     // Constructor
     public SessionManager(Context context){
         this._context = context;
@@ -42,12 +45,25 @@ public class SessionManager {
     }
 
 
+    public void saveSetting( String fontsize , String fontstyle){ //storeObjectSiswa
+        editor.putString(KEY_FONT_SIZE, fontsize);
+        editor.putString(KEY_FONT_STYLE, fontstyle);
+        editor.commit();
+    }
+
 
     public String getInstanceUser() {
         return pref.getString(KEY_USER, null);
     }
 
 
+    public String getFontSize() {
+        return pref.getString(KEY_FONT_SIZE, null);
+    }
+
+    public String getFontStyle() {
+        return pref.getString(KEY_FONT_STYLE, null);
+    }
 
     /**
      * Hapus Data Session

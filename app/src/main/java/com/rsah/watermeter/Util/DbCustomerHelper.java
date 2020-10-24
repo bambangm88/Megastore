@@ -19,6 +19,8 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
 
 public class DbCustomerHelper extends SQLiteOpenHelper {
 
@@ -166,7 +168,7 @@ public class DbCustomerHelper extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
 
-
+        cursor.close();
         database.close();
         return wordList;
     }
@@ -208,6 +210,7 @@ public class DbCustomerHelper extends SQLiteOpenHelper {
 
         Log.e("select sqlite ", "" + wordList);
 
+        cursor.close();
         database.close();
         return wordList;
     }
@@ -261,7 +264,7 @@ public class DbCustomerHelper extends SQLiteOpenHelper {
         Log.e("select sqlite query ", "" + selectQuery);
 
         Log.e("select sqlite ", "" + wordList);
-
+        cursor.close();
         database.close();
         return wordList;
     }
@@ -288,7 +291,7 @@ public class DbCustomerHelper extends SQLiteOpenHelper {
         Log.e("select sqlite query ", "" + selectQuery);
 
         Log.e("select sqlite ", "" + wordList);
-
+        cursor.close();
         database.close();
         return wordList;
     }
@@ -320,7 +323,7 @@ public class DbCustomerHelper extends SQLiteOpenHelper {
         Log.e("select sqlite query ", "" + selectQuery);
 
         Log.e("select sqlite ", "" + wordList);
-
+        cursor.close();
         database.close();
         return wordList;
     }
@@ -363,7 +366,7 @@ public class DbCustomerHelper extends SQLiteOpenHelper {
         Log.e("select sqlite query ", "" + selectQuery);
 
         Log.e("select sqlite ", "" + wordList);
-
+        cursor.close();
         database.close();
         return wordList;
     }
@@ -372,50 +375,66 @@ public class DbCustomerHelper extends SQLiteOpenHelper {
     public ArrayList<HashMap<String, String>> getAllCustomer() {
         ArrayList<HashMap<String, String>> wordList;
         wordList = new ArrayList<HashMap<String, String>>();
-        String selectQuery = "SELECT * FROM " + TABLE_CUSTOMER
-                + " WHERE " +
-                COLUMN_STATUS_SYNC+ "==" + "'" + Constant.STATUS_OPEN + "'"
-                + " or " +
-                COLUMN_STATUS_SYNC+ "==" + "'" + Constant.STATUS_UPDATED + "'"
-                + " or " +
-                COLUMN_STATUS_SYNC+ "==" + "'" + Constant.STATUS_WAITING + "'"
-                + " or " +
-                COLUMN_STATUS_SYNC+ "==" + "'" + Constant.STATUS_FAILED + "'"
-                ;
-        SQLiteDatabase database = this.getWritableDatabase();
-        Cursor cursor = database.rawQuery(selectQuery, null);
-        if (cursor.moveToFirst()) {
-            do {
-                HashMap<String, String> map = new HashMap<String, String>();
-                map.put(COLUMN_ID, cursor.getString(1));
-                map.put(COLUMN_CST_ID, cursor.getString(2));
-                map.put(COLUMN_CST_NAME, cursor.getString(3));
-                map.put(COLUMN_REFERENCE, cursor.getString(4));
-                map.put(COLUMN_AREA, cursor.getString(5));
-                map.put(COLUMN_ADDRESS, cursor.getString(6));
-                map.put(COLUMN_COUNT_METER, cursor.getString(7));
-                map.put(COLUMN_IMAGE, cursor.getString(8));
-                map.put(COLUMN_IMAGE_2, cursor.getString(9));
-                map.put(COLUMN_DATE, cursor.getString(10));
-                map.put(COLUMN_FINAL_METER, cursor.getString(11));
-                map.put(COLUMN_USER_ID, cursor.getString(12));
-                map.put(COLUMN_STATUS_SYNC, cursor.getString(13));
-                map.put(COLUMN_DESCRIPTION, cursor.getString(14));
-                map.put(COLUMN_STATUS, cursor.getString(15));
-                map.put(COLUMN_PERIOD_ID, cursor.getString(16));
-                map.put(COLUMN_STATUS_SERVER, cursor.getString(17));
-                map.put(COLUMN_PREV_INITIAL_METER, cursor.getString(18));
-                map.put(COLUMN_INITIAL_METER, cursor.getString(19));
-                map.put(COLUMN_PREV_DATE_SCAN, cursor.getString(20));
+        try {
 
-                wordList.add(map);
-            } while (cursor.moveToNext());
+            String selectQuery = "SELECT * FROM " + TABLE_CUSTOMER
+                    + " WHERE " +
+                    COLUMN_STATUS_SYNC+ "==" + "'" + Constant.STATUS_OPEN + "'"
+                    + " or " +
+                    COLUMN_STATUS_SYNC+ "==" + "'" + Constant.STATUS_UPDATED + "'"
+                    + " or " +
+                    COLUMN_STATUS_SYNC+ "==" + "'" + Constant.STATUS_WAITING + "'"
+                    + " or " +
+                    COLUMN_STATUS_SYNC+ "==" + "'" + Constant.STATUS_PENDING+ "'"
+                    + " or " +
+                    COLUMN_STATUS_SYNC+ "==" + "'" + Constant.STATUS_FAILED + "'"
+                    ;
+            SQLiteDatabase database = this.getWritableDatabase();
+            Cursor cursor = database.rawQuery(selectQuery, null);
+
+            if(cursor.getCount() != 0) {
+
+                if (cursor.moveToFirst()) {
+                    do {
+                        HashMap<String, String> map = new HashMap<String, String>();
+                        map.put(COLUMN_ID, cursor.getString(1));
+                        map.put(COLUMN_CST_ID, cursor.getString(2));
+                        map.put(COLUMN_CST_NAME, cursor.getString(3));
+                        map.put(COLUMN_REFERENCE, cursor.getString(4));
+                        map.put(COLUMN_AREA, cursor.getString(5));
+                        map.put(COLUMN_ADDRESS, cursor.getString(6));
+                        map.put(COLUMN_COUNT_METER, cursor.getString(7));
+                        map.put(COLUMN_IMAGE, cursor.getString(8));
+                        map.put(COLUMN_IMAGE_2, cursor.getString(9));
+                        map.put(COLUMN_DATE, cursor.getString(10));
+                        map.put(COLUMN_FINAL_METER, cursor.getString(11));
+                        map.put(COLUMN_USER_ID, cursor.getString(12));
+                        map.put(COLUMN_STATUS_SYNC, cursor.getString(13));
+                        map.put(COLUMN_DESCRIPTION, cursor.getString(14));
+                        map.put(COLUMN_STATUS, cursor.getString(15));
+                        map.put(COLUMN_PERIOD_ID, cursor.getString(16));
+                        map.put(COLUMN_STATUS_SERVER, cursor.getString(17));
+                        map.put(COLUMN_PREV_INITIAL_METER, cursor.getString(18));
+                        map.put(COLUMN_INITIAL_METER, cursor.getString(19));
+                        map.put(COLUMN_PREV_DATE_SCAN, cursor.getString(20));
+
+                        wordList.add(map);
+                    } while (cursor.moveToNext());
+                }
+
+            }
+
+            Log.e("select sqlite ", "" + wordList);
+            cursor.close();
+            database.close();
+
+
+        }catch (Exception e){
+            Log.e(TAG, "getAllCustomer: "+e.getMessage() );
         }
 
-        Log.e("select sqlite ", "" + wordList);
-
-        database.close();
         return wordList;
+
     }
 
     public void insertCustomerToDb(ResponseCustomer rsp) {
@@ -447,6 +466,7 @@ public class DbCustomerHelper extends SQLiteOpenHelper {
 
         Log.e("select sqlite ", "" + queryValues);
         database.execSQL(queryValues);
+
         database.close();
     }
 
