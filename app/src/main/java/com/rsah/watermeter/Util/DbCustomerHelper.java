@@ -216,6 +216,24 @@ public class DbCustomerHelper extends SQLiteOpenHelper {
     }
 
 
+    public int getCustomerCount(String status) {
+        String countQuery = "SELECT idLocal FROM " + TABLE_CUSTOMER + " WHERE " + COLUMN_STATUS_SYNC + "=" + "'" + status+ "'";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int count = cursor.getCount();
+        cursor.close();
+        return count;
+    }
+
+    public int getCustomerCountAll() {
+        String countQuery = "SELECT idLocal FROM " + TABLE_CUSTOMER ;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int count = cursor.getCount();
+        cursor.close();
+        return count;
+    }
+
     public ArrayList<HashMap<String, String>> getAllCustomerByRefAddressName(String ref , String address , String name , String status , String cluster) {
         ArrayList<HashMap<String, String>> wordList;
         wordList = new ArrayList<HashMap<String, String>>();
@@ -332,7 +350,7 @@ public class DbCustomerHelper extends SQLiteOpenHelper {
         ArrayList<HashMap<String, String>> wordList;
         wordList = new ArrayList<HashMap<String, String>>();
 
-        String selectQuery = "SELECT * FROM " + TABLE_CUSTOMER ;
+        String selectQuery = "SELECT * FROM " + TABLE_CUSTOMER + " limit 100" ;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
@@ -384,8 +402,6 @@ public class DbCustomerHelper extends SQLiteOpenHelper {
                     COLUMN_STATUS_SYNC+ "==" + "'" + Constant.STATUS_UPDATED + "'"
                     + " or " +
                     COLUMN_STATUS_SYNC+ "==" + "'" + Constant.STATUS_WAITING + "'"
-                    + " or " +
-                    COLUMN_STATUS_SYNC+ "==" + "'" + Constant.STATUS_PENDING+ "'"
                     + " or " +
                     COLUMN_STATUS_SYNC+ "==" + "'" + Constant.STATUS_FAILED + "'"
                     ;

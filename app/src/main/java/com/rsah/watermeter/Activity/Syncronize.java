@@ -26,6 +26,7 @@ import com.developer.kalert.KAlertDialog;
 import com.rsah.watermeter.Api.ApiService;
 import com.rsah.watermeter.Api.Server;
 import com.rsah.watermeter.Constant.Constant;
+import com.rsah.watermeter.MainActivity;
 import com.rsah.watermeter.Model.json.Json;
 import com.rsah.watermeter.Model.json.JsonCustomer;
 import com.rsah.watermeter.Model.json.JsonPeriod;
@@ -52,6 +53,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.rsah.watermeter.Fragment.TasklistFragment.checkPeriod;
 import static com.rsah.watermeter.Util.DbCustomerHelper.COLUMN_ADDRESS;
 import static com.rsah.watermeter.Util.DbCustomerHelper.COLUMN_AREA;
 import static com.rsah.watermeter.Util.DbCustomerHelper.COLUMN_COUNT_METER;
@@ -103,6 +105,8 @@ public class Syncronize extends AppCompatActivity {
     private static String period_desc_dump = "" ;
     private static String period_desc_dump_new = "" ;
     private LinearLayout cardnewperiod ;
+    public static boolean doneAsync= false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,14 +152,28 @@ public class Syncronize extends AppCompatActivity {
             }
         });
 
-        getDataCustomerFromDBSetToTextview();
+
+
 
         String uid_ = Utility.UID;
         String secretkey = Utility.SECRETKEY;
         String method = Constant.TAG_METHOD;
         String time = ""+System.currentTimeMillis();
         String signature_ = Helper.Hash_SHA256(uid_+secretkey+time);
-        requestPeriod(uid_,signature_,method,time);
+
+        ArrayList<HashMap<String, String>> datalastSync = SQLite.getAllSync(Constant.TAG_NAME_APP);
+
+        Log.e("TAG", "onCreate: "+datalastSync.size() );
+
+        if (datalastSync.size() != 0){
+            String period_desc_local  = datalastSync.get(0).get(COLUMN_PERIOD_DESC) ;
+            tvperiod.setText(period_desc_local);
+        }
+
+        if (checkPeriod) {
+            requestPeriod(uid_, signature_, method, time);
+        }
+
 
 
         swnewperiod.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -181,6 +199,11 @@ public class Syncronize extends AppCompatActivity {
             }
         });
 
+
+        SQLite.exportDB(Syncronize.this);
+
+
+        getDataCustomerFromDBSetToTextview();
 
 
 
@@ -446,6 +469,8 @@ public class Syncronize extends AppCompatActivity {
             public void onFailure(Call<ResponseRequest> call, Throwable t) {
 
                 SQLite.updateStatusCustomerByReference(Constant.STATUS_FAILED,reference); //change status failed /= pending
+                asyncprogress.cancel(true);
+
                 Toast.makeText(Syncronize.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -469,21 +494,23 @@ public class Syncronize extends AppCompatActivity {
 
     private void getDataCustomerFromDBSetToTextview(){
 
-        ArrayList<HashMap<String, String>> dataopen = SQLite.getAllCustomerByStatus(Constant.STATUS_UPDATED);
-        tvopen.setText(""+dataopen.size());
 
-        ArrayList<HashMap<String, String>> datawaiting = SQLite.getAllCustomerByStatus(Constant.STATUS_WAITING);
-        tvwaiting.setText(""+datawaiting.size());
+        int dataopen = SQLite.getCustomerCount(Constant.STATUS_UPDATED);
+        tvopen.setText(""+dataopen);
 
-        ArrayList<HashMap<String, String>> datacompleted = SQLite.getAllCustomerByStatus(Constant.STATUS_COMPLETED);
-        tvcomplete.setText(""+datacompleted.size());
+        int datawaiting = SQLite.getCustomerCount(Constant.STATUS_WAITING);
+        tvwaiting.setText(""+datawaiting);
 
-        ArrayList<HashMap<String, String>> datafailed = SQLite.getAllCustomerByStatus(Constant.STATUS_FAILED);
-        ArrayList<HashMap<String, String>> datapending = SQLite.getAllCustomerByStatus(Constant.STATUS_PENDING);
-        int Pending = datapending.size() + datafailed.size() ;
+        int datacompleted = SQLite.getCustomerCount(Constant.STATUS_COMPLETED);
+        tvcomplete.setText(""+datacompleted);
+
+        int datafailed = SQLite.getCustomerCount(Constant.STATUS_FAILED);
+
+        int datapending = SQLite.getCustomerCount(Constant.STATUS_PENDING);
+        int Pending = datapending + datafailed ;
         tvpending.setText(""+Pending);
 
-        ArrayList<HashMap<String, String>> datanew = SQLite.getAllCustomerByStatus("NEW");
+        int datanew = SQLite.getCustomerCount("NEW");
 
 
         ArrayList<HashMap<String, String>> datalastSync = SQLite.getAllSync(Constant.TAG_NAME_APP);
@@ -497,11 +524,10 @@ public class Syncronize extends AppCompatActivity {
         String waiting = tvwaiting.getText().toString();
         String complete = tvcomplete.getText().toString();
         String pending = tvpending.getText().toString();
-        int total = Integer.parseInt(open) + Integer.parseInt(waiting) + Integer.parseInt(complete) + Integer.parseInt(pending)  + datanew.size();
+        int total = Integer.parseInt(open) + Integer.parseInt(waiting) + Integer.parseInt(complete) + Integer.parseInt(pending)  + datanew;
         tvtotal.setText(""+total);
 
     }
-
 
 
     private class AsyncTaskProgress extends AsyncTask<String,Integer,String>{
@@ -530,7 +556,7 @@ public class Syncronize extends AppCompatActivity {
             String signature_ = Helper.Hash_SHA256(uid_+secretkey+time);
 
             try {
-                Thread.sleep(4000);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -552,7 +578,7 @@ public class Syncronize extends AppCompatActivity {
 
                     //add delay for wait database is uptodate
                     try {
-                        Thread.sleep(5000);
+                        Thread.sleep(2000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -680,7 +706,7 @@ public class Syncronize extends AppCompatActivity {
                                 SQLite.deleteAllCustomer();
                                 //add delay for wait database is uptodate
                                 try {
-                                    Thread.sleep(5000);
+                                    Thread.sleep(2000);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
@@ -761,17 +787,23 @@ public class Syncronize extends AppCompatActivity {
                 showProgress(false);
                 asyncprogress.cancel(true);
 
-                new KAlertDialog(Syncronize.this, KAlertDialog.WARNING_TYPE)
+                new KAlertDialog(Syncronize.this, KAlertDialog.SUCCESS_TYPE)
                         .setTitleText("Notification")
-                        .setContentText("Syncronized Up Gagal, Terjadi Kesalahan")
+                        .setContentText("Syncronized Berhasil")
                         .setConfirmText("OK")
                         .setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
                             @Override
                             public void onClick(KAlertDialog sDialog) {
                                 sDialog.dismissWithAnimation();
-                                Intent intent = new Intent(Syncronize.this,Syncronize.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                getDataCustomerFromDBSetToTextview();
+                                checkPeriod = false;
+                                doneAsync = true ;
+                                finish();
+                                Intent intent = new Intent(Syncronize.this,MainActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);;
+
+
                             }
                         })
                         .show();
@@ -790,9 +822,14 @@ public class Syncronize extends AppCompatActivity {
                             @Override
                             public void onClick(KAlertDialog sDialog) {
                                 sDialog.dismissWithAnimation();
-                                Intent intent = new Intent(Syncronize.this,Syncronize.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);;
+                                getDataCustomerFromDBSetToTextview();
+                                checkPeriod = false;
+                                doneAsync = true;
+                                finish();
+                                Intent intent = new Intent(Syncronize.this, MainActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+
                             }
                         })
                         .show();
@@ -1124,12 +1161,17 @@ public class Syncronize extends AppCompatActivity {
                             @Override
                             public void onClick(KAlertDialog sDialog) {
                                 sDialog.dismissWithAnimation();
-                                //getDataCustomerFromDBSetToTextview();
+                                getDataCustomerFromDBSetToTextview();
 
+                                checkPeriod = false;
+                                doneAsync = true ;
 
-                                Intent intent = new Intent(Syncronize.this,Syncronize.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                finish();
+                                Intent intent = new Intent(Syncronize.this,MainActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
+                            ;
+
                             }
                         })
                         .show();

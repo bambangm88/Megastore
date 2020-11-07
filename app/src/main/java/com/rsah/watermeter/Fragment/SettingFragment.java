@@ -21,6 +21,8 @@ import com.rsah.watermeter.Session.SessionManager;
 
 public class SettingFragment extends Fragment {
 
+
+
     private LinearLayout btnmore , btnmlogout , btnsync , btnbackup;
     private SessionManager session ;
 

@@ -35,6 +35,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import static com.rsah.watermeter.Activity.Syncronize.doneAsync;
+import static com.rsah.watermeter.Fragment.TasklistFragment.checkPeriod;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -47,9 +50,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-
 
         session = new SessionManager(this);
         BottomNavigationView navigation = findViewById(R.id.navigation);
@@ -70,8 +70,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //default
         // displaySelectedScreenNavigationDrawer(R.id.nav_home);
 
+
+        if (doneAsync){
+            loadFragment(new SettingFragment());
+            doneAsync = false ;
+            return;
+        }
+
+
         loadFragment(new MainScanFragment());
 
+
+
+        setAuth();
+
+
+
+    }
+
+
+
+    private void setAuth(){
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
         //set user name and id in textview
         ResponseLogin user = Helper.DecodeFromJsonResponseLogin(session.getInstanceUser());
         String name = user.getUsername();
@@ -80,13 +102,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         TextView txtname = headerView.findViewById(R.id.txttitle);
         txtname.setText(name);
         txttitle.setText(id);
-
-
-
-
-
     }
-
 
     private void displaySelectedScreenNavigationDrawer(int itemId) {
 
@@ -124,7 +140,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
     }
-
 
 
 
@@ -225,6 +240,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-
-
+    @Override
+    protected void onResume() {
+        setAuth();
+        super.onResume();
+    }
 }

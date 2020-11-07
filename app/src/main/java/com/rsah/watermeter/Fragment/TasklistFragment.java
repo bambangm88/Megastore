@@ -53,7 +53,7 @@ import static com.rsah.watermeter.Util.DbCustomerHelper.COLUMN_STATUS_SERVER;
 
 public class TasklistFragment extends Fragment {
 
-
+    public static boolean checkPeriod= true;
     private ListView listView;
     private AlertDialog.Builder dialog;
     private List<ResponseCustomer> itemList = new ArrayList<ResponseCustomer>();
@@ -101,7 +101,7 @@ public class TasklistFragment extends Fragment {
             }
         });
 
-
+        checkPeriod = true ;
 
         getAllCustomer();
 
@@ -143,8 +143,8 @@ public class TasklistFragment extends Fragment {
     private void getAllCustomer() {
 
         ArrayList<HashMap<String, String>> row = SQLite.getAllTaskListCustomer();
-
-        jumlahunit.setText(""+row.size()+" unit");
+        int Alldata = SQLite.getCustomerCountAll();
+        jumlahunit.setText("Menampilkan "+row.size()+" / "+Alldata + " unit");
 
         show_card_notfound(false);
         itemList.clear();
